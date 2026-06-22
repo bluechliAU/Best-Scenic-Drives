@@ -8,39 +8,55 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Sydney Scenic Drives | Animated Racing Guide</title>
+  <title>Tokyo Neon Sydney Drives</title>
 
-  <meta name="description" content="Animated guide to the best scenic drives from Sydney, including Kiama, Palm Beach, Blue Mountains, Hawkesbury, Central Coast and Kangaroo Valley." />
+  <meta name="description" content="A neon anime-inspired interactive guide to the best scenic drives from Sydney." />
 
   <style>
 
     :root {
 
-      --red: #ff3b30;
+      --bg: #06040d;
 
-      --yellow: #ffd60a;
+      --bg2: #10061f;
 
-      --black: #0f0f10;
+      --panel: rgba(15, 14, 28, 0.72);
 
-      --black-2: #18181b;
-
-      --white: #f9fafb;
-
-      --muted: #c9ced6;
-
-      --card: rgba(255,255,255,0.06);
-
-      --glass: rgba(255,255,255,0.08);
+      --panel-strong: rgba(11, 8, 22, 0.86);
 
       --line: rgba(255,255,255,0.10);
 
-      --shadow: 0 18px 50px rgba(0,0,0,0.35);
+      --text: #f7f7ff;
 
-      --glow: 0 0 0 1px rgba(255,255,255,0.08), 0 10px 40px rgba(255, 59, 48, 0.18);
+      --muted: #c9c4eb;
 
-      --radius: 20px;
+      --pink: #ff3cac;
 
-      --max: 1200px;
+      --pink-2: #ff78c9;
+
+      --cyan: #00f0ff;
+
+      --blue: #5b7cff;
+
+      --purple: #8c52ff;
+
+      --yellow: #ffe168;
+
+      --green: #6effb8;
+
+      --danger: #ff5858;
+
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+
+      --glow-pink: 0 0 24px rgba(255, 60, 172, .38);
+
+      --glow-cyan: 0 0 28px rgba(0, 240, 255, .34);
+
+      --radius: 22px;
+
+      --max: 1280px;
+
+      --header-h: 78px;
 
     }
 
@@ -54,29 +70,65 @@
 
       margin: 0;
 
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--text);
+
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 
       background:
 
-        radial-gradient(circle at 20% 0%, rgba(255,214,10,.14), transparent 35%),
+        radial-gradient(circle at 15% 10%, rgba(255,60,172,.16), transparent 22%),
 
-        radial-gradient(circle at 80% 10%, rgba(255,59,48,.18), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(0,240,255,.16), transparent 20%),
 
-        linear-gradient(180deg, #080809 0%, #111214 45%, #0a0b0d 100%);
+        radial-gradient(circle at 50% 120%, rgba(140,82,255,.18), transparent 35%),
 
-      color: var(--white);
-
-      line-height: 1.6;
+        linear-gradient(180deg, #06040d, #0b0716 35%, #09050f 100%);
 
       overflow-x: hidden;
+
+      line-height: 1.6;
 
     }
 
  
 
-    a { color: inherit; text-decoration: none; }
+    body::before {
 
-    img { max-width: 100%; }
+      content: "";
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background-image:
+
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+
+      background-size: 42px 42px;
+
+      mask-image: radial-gradient(circle at center, black, transparent 90%);
+
+      opacity: .14;
+
+      z-index: 0;
+
+    }
+
+ 
+
+    .sky-signs, .particles, .speed-lights, .city, .street {
+
+      position: absolute;
+
+      inset: 0;
+
+      pointer-events: none;
+
+    }
 
  
 
@@ -86,23 +138,31 @@
 
       top: 0;
 
-      z-index: 1000;
+      z-index: 1200;
 
-      backdrop-filter: blur(14px);
+      height: var(--header-h);
 
-      background: rgba(8,8,9,0.65);
+      backdrop-filter: blur(18px);
+
+      background: linear-gradient(180deg, rgba(8, 7, 18, .88), rgba(8, 7, 18, .70));
 
       border-bottom: 1px solid var(--line);
 
+      box-shadow: 0 8px 24px rgba(0,0,0,.35);
+
     }
+
+ 
 
     .nav {
 
       max-width: var(--max);
 
+      height: 100%;
+
       margin: 0 auto;
 
-      padding: 14px 20px;
+      padding: 0 20px;
 
       display: flex;
 
@@ -110,9 +170,11 @@
 
       justify-content: space-between;
 
-      gap: 16px;
+      gap: 22px;
 
     }
+
+ 
 
     .brand {
 
@@ -120,61 +182,123 @@
 
       align-items: center;
 
-      gap: 12px;
+      gap: 14px;
 
-      font-weight: 800;
-
-      letter-spacing: .3px;
+      min-width: 0;
 
     }
 
-    .brand-badge {
+ 
 
-      width: 40px; height: 40px;
+    .brand-icon {
 
-      border-radius: 12px;
+      width: 46px;
 
-      display: inline-grid;
+      height: 46px;
+
+      display: grid;
 
       place-items: center;
 
-      background: linear-gradient(135deg, var(--red), var(--yellow));
+      border-radius: 14px;
 
-      box-shadow: var(--glow);
+      background: linear-gradient(135deg, rgba(255,60,172,.22), rgba(0,240,255,.18));
 
-      font-size: 1.1rem;
+      border: 1px solid rgba(255,255,255,.12);
+
+      box-shadow: var(--glow-pink), var(--glow-cyan), inset 0 0 20px rgba(255,255,255,.06);
+
+      font-size: 1.2rem;
 
     }
+
+ 
+
+    .brand-text {
+
+      display: grid;
+
+      line-height: 1.02;
+
+    }
+
+ 
+
+    .brand-text strong {
+
+      font-size: 1rem;
+
+      letter-spacing: .05em;
+
+      text-transform: uppercase;
+
+      white-space: nowrap;
+
+    }
+
+ 
+
+    .brand-text span {
+
+      font-size: .74rem;
+
+      color: var(--muted);
+
+      letter-spacing: .19em;
+
+      text-transform: uppercase;
+
+      opacity: .9;
+
+    }
+
+ 
 
     .nav-links {
 
       display: flex;
 
+      align-items: center;
+
+      gap: 10px;
+
       flex-wrap: wrap;
 
-      gap: 14px;
-
-      color: var(--muted);
-
-      font-size: .95rem;
-
     }
+
+ 
 
     .nav-links a {
 
-      padding: 8px 12px;
+      color: var(--muted);
+
+      font-weight: 700;
+
+      font-size: .94rem;
+
+      padding: 10px 13px;
 
       border-radius: 999px;
 
-      transition: .25s ease;
+      border: 1px solid transparent;
+
+      transition: transform .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
 
     }
 
-    .nav-links a:hover {
+ 
 
-      color: var(--white);
+    .nav-links a:hover,
 
-      background: rgba(255,255,255,0.08);
+    .nav-links a.active {
+
+      color: var(--text);
+
+      border-color: rgba(255,255,255,.14);
+
+      background: rgba(255,255,255,.055);
+
+      box-shadow: var(--glow-cyan);
 
       transform: translateY(-1px);
 
@@ -186,95 +310,63 @@
 
       position: relative;
 
-      isolation: isolate;
+      min-height: calc(100vh - var(--header-h));
 
-      min-height: 88vh;
-
-      display: flex;
+      display: grid;
 
       align-items: center;
 
-      justify-content: center;
+      isolation: isolate;
 
-      overflow: hidden;
+      overflow: clip;
 
       border-bottom: 1px solid var(--line);
 
     }
 
-    .hero::before {
+ 
+
+    .hero::after {
 
       content: "";
 
       position: absolute;
 
-      inset: auto 0 0 0;
+      inset: 0;
 
-      height: 210px;
+      background: linear-gradient(180deg, rgba(4,3,10,0) 0%, rgba(4,3,10,.28) 40%, rgba(4,3,10,.74) 100%);
 
-      background:
+      z-index: 1;
 
-        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.42) 100%),
-
-        repeating-linear-gradient(
-
-          to right,
-
-          #1f1f22 0 90px,
-
-          #29292d 90px 180px
-
-        );
-
-      animation: roadMove 1.8s linear infinite;
-
-      transform: perspective(520px) rotateX(70deg) translateY(110px) scale(1.8);
-
-      transform-origin: bottom center;
-
-      opacity: .95;
+      pointer-events: none;
 
     }
 
-    .lane {
-
-      position: absolute;
-
-      bottom: 106px;
-
-      left: -10%;
-
-      width: 120%;
-
-      height: 6px;
-
-      background: repeating-linear-gradient(to right, rgba(255,214,10,.85) 0 55px, transparent 55px 110px);
-
-      filter: drop-shadow(0 0 8px rgba(255,214,10,.5));
-
-      animation: lanes 1.15s linear infinite;
-
-      transform: perspective(520px) rotateX(72deg) translateY(35px) scale(1.6);
-
-      transform-origin: bottom center;
-
-    }
+ 
 
     .hero-wrap {
 
-      width: min(var(--max), 100% - 40px);
+      position: relative;
+
+      z-index: 3;
+
+      width: min(var(--max), calc(100% - 36px));
+
+      margin: 0 auto;
 
       display: grid;
 
-      gap: 28px;
+      grid-template-columns: 1.1fr .9fr;
 
-      padding: 80px 0 210px;
+      gap: 26px;
 
-      position: relative;
+      padding: 42px 0 210px;
 
-      z-index: 2;
+      align-items: center;
 
     }
+
+ 
 
     .eyebrow {
 
@@ -286,65 +378,103 @@
 
       padding: 10px 14px;
 
-      border: 1px solid rgba(255,255,255,0.12);
+      width: fit-content;
+
+      max-width: 100%;
 
       border-radius: 999px;
 
-      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,.12);
 
-      color: #fff7d1;
+      color: #fdf7aa;
 
-      width: fit-content;
+      background: rgba(17, 12, 30, .72);
 
-      box-shadow: var(--shadow);
+      box-shadow: var(--glow-pink), inset 0 0 20px rgba(255,255,255,.04);
 
-      animation: fadeUp .8s ease both;
+      font-weight: 700;
 
-    }
+      letter-spacing: .06em;
 
-    .hero h1 {
+      text-transform: uppercase;
 
-      margin: 0;
+      font-size: .77rem;
 
-      max-width: 900px;
-
-      font-size: clamp(2.5rem, 6vw, 5.6rem);
-
-      line-height: .95;
-
-      letter-spacing: -0.04em;
-
-      animation: fadeUp 1s ease both;
+      animation: fadeUp .9s both;
 
     }
 
-    .hero h1 .accent {
+ 
 
-      background: linear-gradient(135deg, var(--yellow), #fff6b0 35%, var(--red));
+    .hero-copy h1 {
 
-      -webkit-background-clip: text;
+      margin: 16px 0 12px;
 
-      background-clip: text;
+      font-size: clamp(2.5rem, 6.4vw, 6.3rem);
 
-      color: transparent;
+      line-height: .92;
 
-      text-shadow: 0 0 30px rgba(255,214,10,0.2);
+      letter-spacing: -.05em;
+
+      animation: fadeUp 1.1s both;
 
     }
 
-    .hero p {
+ 
 
-      margin: 0;
+    .title-neon {
 
-      max-width: 780px;
+      display: inline-block;
+
+      color: var(--text);
+
+      text-shadow:
+
+        0 0 16px rgba(0,240,255,.3),
+
+        0 0 28px rgba(255,60,172,.22);
+
+    }
+
+ 
+
+    .title-jp {
+
+      display: block;
+
+      margin-top: 10px;
+
+      font-size: clamp(1rem, 2vw, 1.3rem);
+
+      letter-spacing: .38em;
+
+      text-transform: uppercase;
+
+      color: var(--yellow);
+
+      text-shadow: 0 0 14px rgba(255,225,104,.28);
+
+      animation: flicker 5s linear infinite;
+
+    }
+
+ 
+
+    .hero-copy p {
+
+      max-width: 720px;
 
       color: var(--muted);
 
-      font-size: clamp(1rem, 1.7vw, 1.17rem);
+      font-size: clamp(1rem, 1.45vw, 1.12rem);
 
-      animation: fadeUp 1.2s ease both;
+      margin: 0 0 24px;
+
+      animation: fadeUp 1.25s both;
 
     }
+
+ 
 
     .hero-actions {
 
@@ -352,13 +482,27 @@
 
       flex-wrap: wrap;
 
-      gap: 14px;
+      gap: 12px;
 
-      animation: fadeUp 1.35s ease both;
+      animation: fadeUp 1.35s both;
 
     }
 
+ 
+
     .btn {
+
+      position: relative;
+
+      appearance: none;
+
+      border: 0;
+
+      cursor: pointer;
+
+      color: white;
+
+      text-decoration: none;
 
       display: inline-flex;
 
@@ -366,41 +510,69 @@
 
       gap: 10px;
 
-      padding: 14px 20px;
+      padding: 14px 18px;
 
-      border-radius: 14px;
+      border-radius: 16px;
 
       font-weight: 800;
 
-      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+      font-size: .96rem;
+
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease, filter .22s ease;
+
+      will-change: transform;
+
+      user-select: none;
 
     }
+
+ 
 
     .btn-primary {
 
-      color: #111;
+      background: linear-gradient(135deg, rgba(255,60,172,.95), rgba(140,82,255,.95));
 
-      background: linear-gradient(135deg, var(--yellow), #fff1a6 60%, #ffe35d);
+      border: 1px solid rgba(255,255,255,.12);
 
-      box-shadow: 0 14px 35px rgba(255,214,10,.16);
+      box-shadow: var(--glow-pink), 0 14px 34px rgba(255,60,172,.24);
 
     }
+
+ 
 
     .btn-secondary {
 
-      background: rgba(255,255,255,0.07);
+      background: rgba(255,255,255,.05);
 
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,.12);
 
-      color: var(--white);
+      color: var(--text);
+
+      box-shadow: var(--glow-cyan);
 
     }
 
-    .btn:hover { transform: translateY(-3px) scale(1.02); }
+ 
 
-    .btn-primary:hover { box-shadow: 0 18px 45px rgba(255,214,10,.24); }
+    .btn:hover,
 
-    .btn-secondary:hover { background: rgba(255,255,255,0.10); }
+    .btn:focus-visible {
+
+      transform: translateY(-2px) scale(1.02);
+
+      filter: saturate(1.1);
+
+      outline: none;
+
+    }
+
+ 
+
+    .btn:active {
+
+      transform: translateY(0) scale(.985);
+
+    }
 
  
 
@@ -408,41 +580,69 @@
 
       display: grid;
 
-      gap: 16px;
-
       grid-template-columns: repeat(4, minmax(0, 1fr));
 
-      margin-top: 10px;
+      gap: 14px;
+
+      margin-top: 26px;
+
+      animation: fadeUp 1.45s both;
 
     }
+
+ 
 
     .stat {
 
-      padding: 18px;
+      position: relative;
+
+      padding: 16px;
 
       border-radius: 18px;
 
-      background: var(--glass);
+      background: linear-gradient(180deg, rgba(19,14,35,.88), rgba(12,8,23,.72));
 
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,.11);
 
       box-shadow: var(--shadow);
 
-      backdrop-filter: blur(10px);
+      overflow: hidden;
 
       transition: transform .25s ease, box-shadow .25s ease;
 
-      animation: fadeUp 1.5s ease both;
+      backdrop-filter: blur(10px);
 
     }
+
+ 
+
+    .stat::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: auto 0 0 0;
+
+      height: 3px;
+
+      background: linear-gradient(90deg, var(--pink), var(--cyan), var(--yellow));
+
+      opacity: .82;
+
+    }
+
+ 
 
     .stat:hover {
 
-      transform: translateY(-6px);
+      transform: translateY(-5px);
 
-      box-shadow: var(--glow);
+      box-shadow: var(--shadow), var(--glow-cyan);
 
     }
+
+ 
 
     .stat strong {
 
@@ -452,11 +652,15 @@
 
       line-height: 1;
 
-      margin-bottom: 6px;
-
       color: var(--yellow);
 
+      text-shadow: 0 0 14px rgba(255,225,104,.26);
+
+      margin-bottom: 7px;
+
     }
+
+ 
 
     .stat span {
 
@@ -468,231 +672,805 @@
 
  
 
-    .speed-lines {
+    .scene-card {
 
-      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      position: relative;
+
+      min-height: 560px;
+
+      border-radius: 28px;
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      background:
+
+        radial-gradient(circle at 30% 20%, rgba(255,60,172,.14), transparent 35%),
+
+        radial-gradient(circle at 88% 18%, rgba(0,240,255,.18), transparent 28%),
+
+        linear-gradient(180deg, rgba(18,12,33,.82), rgba(10,7,20,.74));
+
+      box-shadow: var(--shadow), var(--glow-pink), inset 0 0 60px rgba(255,255,255,.03);
+
+      overflow: hidden;
+
+      animation: floatScene 8s ease-in-out infinite;
 
     }
-
-    .speed-lines span {
-
-      position: absolute;
-
-      left: -20%;
-
-      width: 180px;
-
-      height: 2px;
-
-      border-radius: 999px;
-
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
-
-      opacity: .35;
-
-      animation: streak 2.4s linear infinite;
-
-    }
-
-    .speed-lines span:nth-child(1) { top: 18%; animation-delay: 0s; width: 160px; }
-
-    .speed-lines span:nth-child(2) { top: 27%; animation-delay: .3s; width: 210px; }
-
-    .speed-lines span:nth-child(3) { top: 39%; animation-delay: .7s; width: 130px; }
-
-    .speed-lines span:nth-child(4) { top: 58%; animation-delay: 1.1s; width: 240px; }
-
-    .speed-lines span:nth-child(5) { top: 72%; animation-delay: 1.6s; width: 190px; }
 
  
 
-    .car-wrap {
+    .city {
 
-      position: absolute;
+      bottom: 118px;
 
-      left: -170px;
+      inset: auto 0 0 0;
 
-      bottom: 172px;
+      height: 280px;
 
-      width: 170px;
+      z-index: 0;
 
-      height: 70px;
+      background:
 
-      animation: carAcross 12s linear infinite;
-
-      z-index: 3;
-
-      filter: drop-shadow(0 14px 24px rgba(0, 0, 0, .45));
+        linear-gradient(180deg, transparent 0%, rgba(7,6,14,.12) 28%, rgba(7,6,14,.55) 70%, rgba(7,6,14,.9) 100%);
 
     }
 
-    .car {
+ 
 
-      position: relative;
+    .tower, .building {
+
+      position: absolute;
+
+      bottom: 0;
+
+      border-radius: 2px 2px 0 0;
+
+      background: linear-gradient(180deg, rgba(13,15,28,.85), rgba(6,7,14,.96));
+
+      border: 1px solid rgba(255,255,255,.07);
+
+      box-shadow: inset 0 0 16px rgba(255,255,255,.02);
+
+    }
+
+ 
+
+    .building::before, .tower::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 6px;
+
+      background:
+
+        repeating-linear-gradient(180deg, rgba(255,255,255,.08) 0 4px, transparent 4px 20px),
+
+        repeating-linear-gradient(90deg, rgba(255,240,88,.18) 0 3px, transparent 3px 14px),
+
+        linear-gradient(180deg, rgba(0,240,255,.12), rgba(255,60,172,.06));
+
+      mix-blend-mode: screen;
+
+      opacity: .55;
+
+    }
+
+ 
+
+    .b1 { left: 3%; width: 14%; height: 160px; }
+
+    .b2 { left: 16%; width: 10%; height: 210px; }
+
+    .b3 { left: 28%; width: 12%; height: 190px; }
+
+    .b4 { left: 42%; width: 10%; height: 250px; }
+
+    .b5 { left: 56%; width: 14%; height: 170px; }
+
+    .b6 { left: 72%; width: 11%; height: 220px; }
+
+    .b7 { left: 85%; width: 12%; height: 185px; }
+
+ 
+
+    .tower {
+
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      width: 5%;
+
+      height: 260px;
+
+      background: linear-gradient(180deg, rgba(18,18,36,.9), rgba(8,9,19,1));
+
+    }
+
+ 
+
+    .tower::after {
+
+      content: "";
+
+      position: absolute;
+
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      width: 4px;
+
+      height: 84px;
+
+      top: -72px;
+
+      background: linear-gradient(180deg, rgba(0,240,255,.2), rgba(0,240,255,.95));
+
+      box-shadow: 0 0 20px rgba(0,240,255,.7);
+
+    }
+
+ 
+
+    .sky-signs .sign {
+
+      position: absolute;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      padding: 10px 14px;
+
+      border-radius: 14px;
+
+      background: rgba(10, 8, 24, .72);
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      backdrop-filter: blur(12px);
+
+      box-shadow: var(--shadow);
+
+      text-transform: uppercase;
+
+      letter-spacing: .12em;
+
+      font-weight: 800;
+
+      font-size: .74rem;
+
+      color: var(--text);
+
+      animation: driftY 7s ease-in-out infinite;
+
+    }
+
+ 
+
+    .sky-signs .sign::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      border-radius: inherit;
+
+      background: linear-gradient(135deg, rgba(255,60,172,.14), rgba(0,240,255,.1));
+
+      pointer-events: none;
+
+    }
+
+ 
+
+    .jp1 { top: 11%; right: 7%; color: var(--pink-2); box-shadow: var(--glow-pink); }
+
+    .jp2 { top: 26%; right: 16%; color: var(--cyan); box-shadow: var(--glow-cyan); animation-delay: -1s; }
+
+    .jp3 { top: 18%; left: 7%; color: var(--yellow); box-shadow: 0 0 24px rgba(255,225,104,.24); animation-delay: -2s; }
+
+    .jp4 { top: 40%; left: 11%; color: var(--green); box-shadow: 0 0 24px rgba(110,255,184,.24); animation-delay: -3s; }
+
+ 
+
+    .particles span,
+
+    .speed-lights span {
+
+      position: absolute;
+
+      display: block;
+
+      border-radius: 999px;
+
+      pointer-events: none;
+
+    }
+
+ 
+
+    .particles span {
+
+      width: 4px;
+
+      height: 4px;
+
+      background: rgba(255,255,255,.84);
+
+      box-shadow: 0 0 14px rgba(255,255,255,.55);
+
+      animation: twinkle linear infinite;
+
+    }
+
+ 
+
+    .particles span:nth-child(1) { left: 7%; top: 12%; animation-duration: 3.6s; }
+
+    .particles span:nth-child(2) { left: 18%; top: 28%; animation-duration: 4.8s; animation-delay: -1s; }
+
+    .particles span:nth-child(3) { left: 34%; top: 14%; animation-duration: 3.8s; animation-delay: -.6s; }
+
+    .particles span:nth-child(4) { left: 47%; top: 24%; animation-duration: 4.9s; animation-delay: -1.5s; }
+
+    .particles span:nth-child(5) { left: 63%; top: 10%; animation-duration: 3.7s; animation-delay: -.8s; }
+
+    .particles span:nth-child(6) { left: 78%; top: 22%; animation-duration: 4.6s; animation-delay: -2s; }
+
+    .particles span:nth-child(7) { left: 88%; top: 14%; animation-duration: 5.2s; animation-delay: -2.2s; }
+
+    .particles span:nth-child(8) { left: 24%; top: 38%; animation-duration: 4.1s; animation-delay: -1.2s; }
+
+    .particles span:nth-child(9) { left: 57%; top: 34%; animation-duration: 5.4s; animation-delay: -.9s; }
+
+    .particles span:nth-child(10) { left: 83%; top: 32%; animation-duration: 4.3s; animation-delay: -.5s; }
+
+ 
+
+    .speed-lights span {
+
+      left: -25%;
+
+      width: 170px;
+
+      height: 2px;
+
+      background: linear-gradient(90deg, transparent, rgba(0,240,255,.9), transparent);
+
+      opacity: .52;
+
+      animation: streak 2.9s linear infinite;
+
+    }
+
+    .speed-lights span:nth-child(1) { top: 15%; animation-delay: 0s; }
+
+    .speed-lights span:nth-child(2) { top: 23%; animation-delay: .45s; width: 240px; }
+
+    .speed-lights span:nth-child(3) { top: 34%; animation-delay: 1s; }
+
+    .speed-lights span:nth-child(4) { top: 48%; animation-delay: 1.35s; width: 220px; }
+
+    .speed-lights span:nth-child(5) { top: 62%; animation-delay: 2s; width: 260px; }
+
+ 
+
+    .street {
+
+      inset: auto 0 0 0;
+
+      height: 190px;
+
+      z-index: 2;
+
+    }
+
+ 
+
+    .road-perspective {
+
+      position: absolute;
+
+      inset: auto 0 0 0;
+
+      height: 180px;
+
+      background:
+
+        linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.12) 100%),
+
+        repeating-linear-gradient(90deg, #161423 0 90px, #1d182d 90px 180px);
+
+      transform: perspective(520px) rotateX(72deg) translateY(76px) scale(1.9);
+
+      transform-origin: bottom center;
+
+      animation: roadMove 1.3s linear infinite;
+
+      box-shadow: inset 0 50px 80px rgba(0,0,0,.35);
+
+    }
+
+ 
+
+    .lane-lines {
+
+      position: absolute;
+
+      left: -10%;
+
+      right: -10%;
+
+      bottom: 68px;
+
+      height: 6px;
+
+      transform: perspective(520px) rotateX(72deg) translateY(34px) scale(1.6);
+
+      transform-origin: bottom center;
+
+      background: repeating-linear-gradient(90deg, rgba(255,225,104,.8) 0 56px, transparent 56px 112px);
+
+      filter: drop-shadow(0 0 10px rgba(255,225,104,.55));
+
+      animation: lanes 1.05s linear infinite;
+
+    }
+
+ 
+
+    .neon-car-wrap {
+
+      position: absolute;
+
+      left: -240px;
+
+      bottom: 112px;
+
+      width: 240px;
+
+      height: 96px;
+
+      z-index: 3;
+
+      animation: carPath 12s linear infinite;
+
+      filter: drop-shadow(0 20px 24px rgba(0,0,0,.45));
+
+    }
+
+ 
+
+    .car-body {
+
+      position: absolute;
+
+      bottom: 16px;
+
+      left: 28px;
 
       width: 170px;
 
       height: 50px;
 
-      margin-top: 10px;
+      border-radius: 46px 56px 16px 18px;
 
-      background: linear-gradient(135deg, #ff6157, #d91c12 70%);
+      background: linear-gradient(135deg, var(--pink), #ff72c5 32%, #ae62ff 70%, #4f96ff 100%);
 
-      border-radius: 36px 50px 18px 18px;
+      box-shadow:
 
-      box-shadow: inset 0 -4px 8px rgba(0,0,0,.25), inset 0 4px 10px rgba(255,255,255,.14);
+        var(--glow-pink),
+
+        var(--glow-cyan),
+
+        inset 0 -8px 14px rgba(0,0,0,.26),
+
+        inset 0 10px 16px rgba(255,255,255,.12);
 
     }
 
-    .car::before {
+ 
+
+    .car-body::before {
 
       content: "";
 
       position: absolute;
 
-      top: -18px;
+      left: 46px;
 
-      left: 35px;
+      top: -20px;
 
       width: 86px;
 
       height: 34px;
 
-      background: linear-gradient(135deg, #23262b, #101216);
+      border-radius: 22px 26px 10px 8px;
 
-      border-radius: 22px 24px 8px 8px;
+      background: linear-gradient(135deg, rgba(10,12,26,.98), rgba(22,27,52,.95));
 
-      transform: skewX(-15deg);
+      transform: skewX(-18deg);
 
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,.07);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.08), 0 0 14px rgba(0,240,255,.2);
 
     }
 
-    .car::after {
+ 
+
+    .car-body::after {
 
       content: "";
 
       position: absolute;
 
-      inset: auto 24px 10px auto;
+      right: -6px;
 
-      width: 18px; height: 6px;
+      bottom: 16px;
 
-      border-radius: 999px;
-
-      background: #fff2b0;
-
-      box-shadow: 0 0 18px rgba(255,214,10,0.8);
-
-    }
-
-    .car .front-light {
-
-      position: absolute;
-
-      right: -4px;
-
-      bottom: 12px;
-
-      width: 12px;
+      width: 16px;
 
       height: 8px;
 
       border-radius: 10px;
 
-      background: #fffad8;
+      background: white;
 
-      box-shadow: 0 0 14px rgba(255,247,194,0.9);
+      box-shadow: 0 0 16px rgba(255,255,255,.96), 0 0 30px rgba(0,240,255,.9);
 
     }
+
+ 
+
+    .tail-light {
+
+      position: absolute;
+
+      left: -2px;
+
+      bottom: 13px;
+
+      width: 14px;
+
+      height: 8px;
+
+      border-radius: 10px;
+
+      background: #ff5567;
+
+      box-shadow: 0 0 14px rgba(255,85,103,.9), 0 0 28px rgba(255,85,103,.54);
+
+    }
+
+ 
 
     .wheel {
 
       position: absolute;
 
-      bottom: -14px;
+      bottom: -6px;
 
-      width: 34px; height: 34px;
+      width: 38px;
+
+      height: 38px;
 
       border-radius: 50%;
 
-      border: 5px solid #36383d;
+      border: 5px solid #2f3347;
 
-      background: radial-gradient(circle at 35% 35%, #8f959f 0 12%, #111 12% 55%, #2a2c31 55% 100%);
+      background: radial-gradient(circle at 35% 35%, #b8bfd7 0 12%, #0f1018 12% 52%, #282d3e 52% 100%);
 
-      animation: spin .4s linear infinite;
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,.06), 0 0 12px rgba(0,0,0,.4);
 
-      box-shadow: inset 0 0 0 3px rgba(255,255,255,.06);
+      animation: spin .42s linear infinite;
 
     }
 
-    .wheel.left { left: 24px; }
+ 
 
-    .wheel.right { right: 24px; }
+    .wheel.front { right: 36px; }
+
+    .wheel.back { left: 36px; }
+
+ 
+
+    .car-trail {
+
+      position: absolute;
+
+      left: 0;
+
+      bottom: 42px;
+
+      width: 120px;
+
+      height: 6px;
+
+      background: linear-gradient(90deg, rgba(255,60,172,0), rgba(255,60,172,.5), rgba(0,240,255,.0));
+
+      filter: blur(3px);
+
+    }
+
+ 
+
+    .panel-floater {
+
+      position: absolute;
+
+      right: 24px;
+
+      bottom: 22px;
+
+      width: min(360px, calc(100% - 30px));
+
+      border-radius: 20px;
+
+      background: rgba(10, 8, 20, .72);
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      backdrop-filter: blur(14px);
+
+      box-shadow: var(--shadow), var(--glow-cyan);
+
+      padding: 18px;
+
+      z-index: 4;
+
+      animation: fadeUp 1.6s both;
+
+    }
+
+ 
+
+    .panel-floater h3 {
+
+      margin: 0 0 10px;
+
+      font-size: 1rem;
+
+      letter-spacing: .2em;
+
+      text-transform: uppercase;
+
+      color: var(--cyan);
+
+    }
+
+ 
+
+    .route-ticker {
+
+      display: grid;
+
+      gap: 10px;
+
+      margin: 0;
+
+      padding: 0;
+
+      list-style: none;
+
+      max-height: 210px;
+
+      overflow: auto;
+
+      scrollbar-width: thin;
+
+      scrollbar-color: rgba(255,255,255,.18) transparent;
+
+    }
+
+ 
+
+    .route-ticker li {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 12px;
+
+      padding: 12px 14px;
+
+      border-radius: 14px;
+
+      background: rgba(255,255,255,.04);
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+
+    }
+
+ 
+
+    .route-ticker li:hover {
+
+      transform: translateX(3px);
+
+      border-color: rgba(0,240,255,.26);
+
+      box-shadow: var(--glow-cyan);
+
+    }
+
+ 
+
+    .route-ticker span:first-child {
+
+      font-weight: 700;
+
+      color: var(--text);
+
+    }
+
+ 
+
+    .route-ticker span:last-child {
+
+      font-size: .82rem;
+
+      color: var(--muted);
+
+      text-transform: uppercase;
+
+      letter-spacing: .08em;
+
+    }
 
  
 
     .section {
 
+      position: relative;
+
       max-width: var(--max);
 
       margin: 0 auto;
 
-      padding: 80px 20px;
+      padding: 84px 20px;
+
+      z-index: 1;
 
     }
+
+ 
 
     .section-head {
 
       display: flex;
 
-      align-items: end;
-
       justify-content: space-between;
 
-      gap: 18px;
+      align-items: end;
 
-      margin-bottom: 28px;
+      gap: 20px;
+
+      margin-bottom: 24px;
 
       flex-wrap: wrap;
 
     }
 
+ 
+
     .section-head h2 {
 
       margin: 0;
 
-      font-size: clamp(1.7rem, 3vw, 3rem);
+      font-size: clamp(1.9rem, 3.2vw, 3.2rem);
 
-      letter-spacing: -0.03em;
+      letter-spacing: -.04em;
+
+      line-height: .95;
 
     }
 
+ 
+
+    .kicker {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      margin-bottom: 14px;
+
+      color: var(--yellow);
+
+      text-transform: uppercase;
+
+      letter-spacing: .18em;
+
+      font-weight: 800;
+
+      font-size: .76rem;
+
+      text-shadow: 0 0 14px rgba(255,225,104,.25);
+
+    }
+
+ 
+
     .section-head p {
 
-      margin: 8px 0 0;
+      margin: 12px 0 0;
 
-      max-width: 740px;
+      max-width: 760px;
 
       color: var(--muted);
 
     }
 
-    .pill {
+ 
 
-      padding: 8px 12px;
+    .section-tools {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+    }
+
+ 
+
+    .chip {
+
+      padding: 10px 12px;
+
+      cursor: pointer;
 
       border-radius: 999px;
 
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,.12);
 
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,.045);
 
-      color: #fff2b0;
+      color: var(--muted);
 
-      font-size: .85rem;
+      font-weight: 800;
 
-      font-weight: 700;
+      letter-spacing: .05em;
+
+      font-size: .78rem;
+
+      text-transform: uppercase;
+
+      transition: transform .22s ease, box-shadow .22s ease, color .22s ease, background .22s ease, border-color .22s ease;
+
+    }
+
+ 
+
+    .chip:hover,
+
+    .chip.active {
+
+      color: var(--text);
+
+      background: rgba(255,255,255,.08);
+
+      border-color: rgba(255,255,255,.18);
+
+      transform: translateY(-2px);
+
+      box-shadow: var(--glow-pink);
 
     }
 
@@ -704,37 +1482,45 @@
 
       grid-template-columns: repeat(3, minmax(0, 1fr));
 
-      gap: 20px;
+      gap: 18px;
 
     }
+
+ 
 
     .route-card {
 
       position: relative;
 
-      border-radius: 22px;
+      border-radius: 24px;
 
-      padding: 22px;
+      border: 1px solid rgba(255,255,255,.12);
 
       background:
 
-        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)),
+        linear-gradient(180deg, rgba(18,12,33,.86), rgba(10,8,20,.72)),
 
-        linear-gradient(180deg, rgba(255,59,48,.12), rgba(255,214,10,.03));
+        radial-gradient(circle at 20% 0%, rgba(255,60,172,.18), transparent 34%),
 
-      border: 1px solid rgba(255,255,255,0.08);
+        radial-gradient(circle at 100% 30%, rgba(0,240,255,.14), transparent 20%);
 
       box-shadow: var(--shadow);
 
       overflow: hidden;
 
-      transform: translateY(18px);
+      transition: transform .26s ease, box-shadow .26s ease, border-color .26s ease, opacity .28s ease;
+
+      isolation: isolate;
+
+      transform: translateY(24px);
 
       opacity: 0;
 
-      animation: riseIn .9s ease forwards;
+      animation: riseIn .85s ease forwards;
 
     }
+
+ 
 
     .route-card:nth-child(2) { animation-delay: .08s; }
 
@@ -746,25 +1532,9 @@
 
     .route-card:nth-child(6) { animation-delay: .40s; }
 
+ 
+
     .route-card::before {
-
-      content: "";
-
-      position: absolute;
-
-      top: -30%; right: -10%;
-
-      width: 180px; height: 180px;
-
-      border-radius: 50%;
-
-      background: radial-gradient(circle, rgba(255,214,10,.22), transparent 70%);
-
-      pointer-events: none;
-
-    }
-
-    .route-card::after {
 
       content: "";
 
@@ -772,39 +1542,105 @@
 
       inset: 0;
 
-      background: linear-gradient(120deg, transparent 0 42%, rgba(255,255,255,0.16) 50%, transparent 58% 100%);
+      background: linear-gradient(120deg, transparent 0 42%, rgba(255,255,255,.12) 50%, transparent 58% 100%);
 
-      transform: translateX(-130%);
+      transform: translateX(-140%);
 
-      transition: transform .8s ease;
+      transition: transform .9s ease;
+
+      z-index: 1;
+
+      pointer-events: none;
 
     }
 
-    .route-card:hover::after { transform: translateX(130%); }
+ 
+
+    .route-card::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: auto 0 0 0;
+
+      height: 4px;
+
+      background: linear-gradient(90deg, var(--pink), var(--cyan), var(--yellow));
+
+      opacity: .9;
+
+      z-index: 1;
+
+    }
+
+ 
 
     .route-card:hover {
 
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-10px) scale(1.012);
 
-      box-shadow: 0 24px 60px rgba(0,0,0,.38), 0 0 0 1px rgba(255,214,10,.2), 0 10px 30px rgba(255,59,48,.2);
+      border-color: rgba(255,255,255,.18);
+
+      box-shadow: var(--shadow), var(--glow-pink), var(--glow-cyan);
 
     }
+
+ 
+
+    .route-card:hover::before {
+
+      transform: translateX(140%);
+
+    }
+
+ 
+
+    .route-card.hidden {
+
+      opacity: .14;
+
+      pointer-events: none;
+
+      transform: scale(.98);
+
+      filter: grayscale(.26);
+
+    }
+
+ 
+
+    .route-card .content {
+
+      position: relative;
+
+      z-index: 2;
+
+      padding: 22px;
+
+      display: grid;
+
+      gap: 14px;
+
+    }
+
+ 
 
     .route-top {
 
       display: flex;
 
+      align-items: start;
+
       justify-content: space-between;
 
-      gap: 16px;
-
-      align-items: flex-start;
-
-      margin-bottom: 14px;
+      gap: 14px;
 
     }
 
-    .route-kicker {
+ 
+
+    .route-kind {
 
       display: inline-flex;
 
@@ -812,43 +1648,81 @@
 
       gap: 8px;
 
-      padding: 8px 11px;
+      padding: 9px 11px;
 
       border-radius: 999px;
 
-      background: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,.06);
 
-      color: #fff1be;
+      border: 1px solid rgba(255,255,255,.1);
 
-      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--yellow);
 
-      font-size: .81rem;
+      font-size: .76rem;
 
-      font-weight: 700;
+      font-weight: 900;
+
+      letter-spacing: .15em;
+
+      text-transform: uppercase;
 
     }
+
+ 
+
+    .route-rank {
+
+      width: 44px;
+
+      height: 44px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 14px;
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      background: rgba(255,255,255,.06);
+
+      color: var(--cyan);
+
+      font-weight: 900;
+
+      box-shadow: var(--glow-cyan);
+
+    }
+
+ 
 
     .route-card h3 {
 
-      margin: 0 0 10px;
+      margin: 0;
 
       font-size: 1.35rem;
 
-      line-height: 1.15;
+      line-height: 1.1;
+
+      letter-spacing: -.02em;
 
     }
 
-    .route-card .summary {
+ 
+
+    .route-article {
 
       color: var(--muted);
 
-      font-size: .98rem;
+      font-size: .97rem;
 
       min-height: 72px;
 
     }
 
-    .meta {
+ 
+
+    .route-meta {
 
       display: grid;
 
@@ -856,47 +1730,59 @@
 
       gap: 10px;
 
-      margin: 16px 0;
+    }
+
+ 
+
+    .route-meta .box {
+
+      padding: 11px 12px;
+
+      border-radius: 16px;
+
+      background: rgba(255,255,255,.05);
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      min-height: 71px;
 
     }
 
-    .meta div {
+ 
 
-      padding: 12px;
-
-      border-radius: 14px;
-
-      background: rgba(255,255,255,0.05);
-
-      border: 1px solid rgba(255,255,255,0.06);
-
-    }
-
-    .meta span {
+    .route-meta .box span {
 
       display: block;
 
-      color: #fff0ad;
-
-      font-size: .78rem;
+      color: var(--cyan);
 
       text-transform: uppercase;
 
-      letter-spacing: .08em;
+      letter-spacing: .12em;
 
-      margin-bottom: 2px;
+      font-size: .72rem;
+
+      margin-bottom: 4px;
+
+      font-weight: 900;
 
     }
 
-    .meta strong {
+ 
+
+    .route-meta .box strong {
 
       display: block;
 
-      font-size: .95rem;
+      font-size: .93rem;
+
+      line-height: 1.3;
 
     }
 
-    .tags {
+ 
+
+    .tag-row {
 
       display: flex;
 
@@ -904,9 +1790,9 @@
 
       gap: 8px;
 
-      margin-top: 10px;
-
     }
+
+ 
 
     .tag {
 
@@ -914,63 +1800,121 @@
 
       border-radius: 999px;
 
-      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,.1);
 
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,.04);
 
       color: var(--muted);
 
-      font-size: .8rem;
+      font-size: .79rem;
 
-    }
-
-    .jump {
-
-      margin-top: 18px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 10px;
-
-      color: #fff4cf;
-
-      font-weight: 800;
+      transition: transform .2s ease, border-color .2s ease;
 
     }
 
  
 
-    .details {
+    .tag:hover {
+
+      transform: translateY(-1px);
+
+      border-color: rgba(0,240,255,.26);
+
+    }
+
+ 
+
+    .route-actions {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 12px;
+
+    }
+
+ 
+
+    .mini-btn {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      font-weight: 900;
+
+      color: var(--text);
+
+      text-transform: uppercase;
+
+      letter-spacing: .12em;
+
+      font-size: .76rem;
+
+      padding: 10px 12px;
+
+      border-radius: 999px;
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      background: rgba(255,255,255,.045);
+
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+
+    }
+
+ 
+
+    .mini-btn:hover {
+
+      transform: translateX(2px);
+
+      box-shadow: var(--glow-cyan);
+
+      border-color: rgba(255,255,255,.18);
+
+    }
+
+ 
+
+    .details-wrap {
 
       display: grid;
 
-      gap: 28px;
+      gap: 24px;
 
     }
+
+ 
 
     .detail-card {
 
       position: relative;
 
-      border-radius: 26px;
+      border-radius: 28px;
+
+      border: 1px solid rgba(255,255,255,.12);
 
       background:
 
-        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04)),
+        linear-gradient(180deg, rgba(16,11,31,.9), rgba(11,8,22,.76)),
 
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+        radial-gradient(circle at 0 0, rgba(255,60,172,.14), transparent 28%),
 
-      border: 1px solid rgba(255,255,255,0.08);
-
-      padding: 28px;
+        radial-gradient(circle at 100% 0, rgba(0,240,255,.12), transparent 18%);
 
       box-shadow: var(--shadow);
 
       overflow: hidden;
 
     }
+
+ 
 
     .detail-card::before {
 
@@ -982,87 +1926,157 @@
 
       width: 100%;
 
-      height: 3px;
+      height: 4px;
 
-      background: linear-gradient(90deg, var(--red), var(--yellow), transparent 80%);
+      background: linear-gradient(90deg, var(--pink), var(--cyan), rgba(255,225,104,.72));
 
     }
+
+ 
+
+    .detail-card .inner {
+
+      padding: 26px;
+
+      display: grid;
+
+      gap: 20px;
+
+    }
+
+ 
 
     .detail-head {
 
       display: flex;
 
-      align-items: flex-start;
+      align-items: start;
 
       justify-content: space-between;
 
-      gap: 16px;
-
-      margin-bottom: 12px;
+      gap: 18px;
 
       flex-wrap: wrap;
 
     }
 
-    .detail-card h3 {
+ 
 
-      margin: 0;
+    .detail-head h3 {
 
-      font-size: clamp(1.4rem, 2.3vw, 2rem);
+      margin: 4px 0 0;
 
-      line-height: 1.1;
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
 
-    }
+      line-height: 1.05;
 
-    .detail-card h4 {
-
-      margin: 0 0 10px;
-
-      font-size: 1.05rem;
-
-      color: #fff1be;
+      letter-spacing: -.03em;
 
     }
 
-    .lede {
+ 
 
-      font-size: 1.04rem;
+    .detail-sub {
+
+      max-width: 950px;
 
       color: var(--muted);
 
-      max-width: 980px;
+      font-size: 1.03rem;
+
+      margin: 0;
 
     }
 
-    .intro-grid {
+ 
+
+    .pill {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      border-radius: 999px;
+
+      padding: 10px 12px;
+
+      border: 1px solid rgba(255,255,255,.12);
+
+      background: rgba(255,255,255,.05);
+
+      color: var(--yellow);
+
+      font-size: .78rem;
+
+      letter-spacing: .14em;
+
+      text-transform: uppercase;
+
+      font-weight: 900;
+
+      white-space: nowrap;
+
+    }
+
+ 
+
+    .summary-grid {
 
       display: grid;
 
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.1fr .9fr;
 
-      gap: 20px;
-
-      margin: 22px 0;
+      gap: 18px;
 
     }
+
+ 
 
     .panel {
 
-      border-radius: 18px;
-
-      background: rgba(255,255,255,0.05);
-
-      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
 
       padding: 18px;
 
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      background: rgba(255,255,255,.042);
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      box-shadow: inset 0 0 25px rgba(255,255,255,.02);
+
+      min-height: 100%;
 
     }
 
-    .panel p:last-child,
+ 
 
-    .panel ul:last-child { margin-bottom: 0; }
+    .panel h4 {
+
+      margin: 0 0 12px;
+
+      font-size: .96rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: .16em;
+
+      color: var(--cyan);
+
+    }
+
+ 
+
+    .panel p,
+
+    .panel li {
+
+      color: var(--muted);
+
+    }
+
+ 
 
     .list {
 
@@ -1070,169 +2084,271 @@
 
       padding-left: 20px;
 
-      color: var(--muted);
+      display: grid;
+
+      gap: 8px;
 
     }
 
  
 
-    .stops-grid {
+    .mini-grid {
 
       display: grid;
 
       grid-template-columns: repeat(2, minmax(0, 1fr));
 
-      gap: 18px;
+      gap: 10px;
 
-      margin-top: 16px;
-
-    }
-
-    .stop {
-
-      position: relative;
-
-      border-radius: 18px;
-
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
-
-      border: 1px solid rgba(255,255,255,0.08);
-
-      padding: 18px;
-
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-
-      overflow: hidden;
-
-    }
-
-    .stop::before {
-
-      content: "";
-
-      position: absolute;
-
-      inset: auto auto 0 0;
-
-      width: 8px;
-
-      height: 100%;
-
-      background: linear-gradient(180deg, var(--red), var(--yellow));
-
-      opacity: .9;
-
-    }
-
-    .stop:hover {
-
-      transform: translateY(-6px);
-
-      box-shadow: var(--glow);
-
-      border-color: rgba(255,214,10,.25);
-
-    }
-
-    .stop h5 {
-
-      margin: 0 0 8px;
-
-      font-size: 1.02rem;
-
-      padding-left: 10px;
-
-    }
-
-    .stop p {
-
-      margin: 8px 0;
-
-      color: var(--muted);
-
-      padding-left: 10px;
-
-    }
-
-    .tips-box {
-
-      margin-top: 18px;
-
-      border-radius: 18px;
-
-      padding: 20px;
-
-      background: linear-gradient(135deg, rgba(255,214,10,.18), rgba(255,59,48,.12));
-
-      border: 1px solid rgba(255,214,10,0.18);
-
-      box-shadow: var(--shadow);
-
-    }
-
-    .verdict {
-
-      margin-top: 18px;
-
-      padding: 18px 20px;
-
-      border-radius: 18px;
-
-      background: linear-gradient(135deg, rgba(255,59,48,.15), rgba(255,214,10,.10));
-
-      border: 1px solid rgba(255,255,255,0.08);
-
-      font-weight: 700;
-
-      color: #fff5db;
+      margin-top: 14px;
 
     }
 
  
 
-    .cta {
+    .mini-grid .box {
+
+      padding: 12px;
+
+      border-radius: 16px;
+
+      background: rgba(255,255,255,.043);
+
+      border: 1px solid rgba(255,255,255,.08);
+
+    }
+
+ 
+
+    .mini-grid .box span {
+
+      display: block;
+
+      font-size: .72rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: .12em;
+
+      color: var(--yellow);
+
+      margin-bottom: 4px;
+
+      font-weight: 900;
+
+    }
+
+ 
+
+    .stop-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 16px;
+
+    }
+
+ 
+
+    .stop-card {
 
       position: relative;
+
+      padding: 18px 18px 18px 22px;
+
+      border-radius: 20px;
+
+      background: rgba(255,255,255,.045);
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      box-shadow: inset 0 0 25px rgba(255,255,255,.015);
+
+      transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
 
       overflow: hidden;
 
     }
 
-    .cta .cta-box {
+ 
 
-      border-radius: 28px;
+    .stop-card::before {
 
-      padding: 28px;
+      content: "";
 
-      background:
+      position: absolute;
 
-        radial-gradient(circle at 10% 0%, rgba(255,214,10,.18), transparent 30%),
+      inset: 0 auto 0 0;
 
-        radial-gradient(circle at 100% 100%, rgba(255,59,48,.18), transparent 32%),
+      width: 5px;
 
-        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      background: linear-gradient(180deg, var(--pink), var(--cyan), var(--yellow));
 
-      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 18px rgba(255,60,172,.3);
+
+    }
+
+ 
+
+    .stop-card:hover {
+
+      transform: translateY(-6px);
+
+      border-color: rgba(255,255,255,.18);
+
+      box-shadow: var(--shadow), var(--glow-pink);
+
+    }
+
+ 
+
+    .stop-card h5 {
+
+      margin: 0 0 10px;
+
+      font-size: 1.02rem;
+
+      line-height: 1.3;
+
+      color: var(--text);
+
+    }
+
+ 
+
+    .stop-card p {
+
+      margin: 7px 0;
+
+      color: var(--muted);
+
+      font-size: .96rem;
+
+    }
+
+ 
+
+    .highlight-box,
+
+    .verdict-box,
+
+    .cta-box {
+
+      border-radius: 22px;
+
+      padding: 20px;
+
+      border: 1px solid rgba(255,255,255,.12);
 
       box-shadow: var(--shadow);
 
     }
 
+ 
+
+    .highlight-box {
+
+      background: linear-gradient(135deg, rgba(255,60,172,.15), rgba(0,240,255,.10));
+
+    }
+
+ 
+
+    .verdict-box {
+
+      background: linear-gradient(135deg, rgba(255,225,104,.11), rgba(140,82,255,.12));
+
+      color: #fffbe3;
+
+      font-weight: 700;
+
+    }
+
+ 
+
+    .compare-grid {
+
+      display: grid;
+
+      grid-template-columns: repeat(3, minmax(0,1fr));
+
+      gap: 16px;
+
+    }
+
+ 
+
+    .compare-card {
+
+      padding: 18px;
+
+      border-radius: 22px;
+
+      background: rgba(255,255,255,.05);
+
+      border: 1px solid rgba(255,255,255,.1);
+
+      position: relative;
+
+      overflow: hidden;
+
+      transition: transform .24s ease, box-shadow .24s ease;
+
+    }
+
+ 
+
+    .compare-card:hover {
+
+      transform: translateY(-6px);
+
+      box-shadow: var(--glow-cyan), var(--shadow);
+
+    }
+
+ 
+
+    .compare-card h4 { margin: 0 0 10px; font-size: 1rem; color: var(--yellow); }
+
+    .compare-card p { margin: 0; color: var(--muted); }
+
+ 
+
+    .cta-box {
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+
+        radial-gradient(circle at 10% 0, rgba(255,60,172,.16), transparent 28%),
+
+        radial-gradient(circle at 100% 100%, rgba(0,240,255,.16), transparent 30%),
+
+        linear-gradient(180deg, rgba(16,11,31,.92), rgba(11,8,22,.8));
+
+    }
+
+ 
+
     .cta-grid {
 
       display: grid;
 
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1.08fr .92fr;
 
-      gap: 20px;
+      gap: 18px;
 
-      align-items: center;
+      align-items: start;
 
     }
 
-    .cta-box h2 { margin-top: 0; }
+ 
 
-    .cta-points {
+    .cta-list {
 
       display: grid;
 
@@ -1240,33 +2356,51 @@
 
     }
 
-    .cta-point {
+ 
+
+    .cta-item {
 
       padding: 14px 16px;
 
-      border-radius: 16px;
+      border-radius: 18px;
 
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,.05);
 
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,.1);
 
       color: var(--muted);
+
+      transition: transform .22s ease, box-shadow .22s ease;
 
     }
 
  
 
-    footer {
+    .cta-item:hover {
 
-      padding: 36px 20px 46px;
+      transform: translateX(3px);
 
-      color: var(--muted);
+      box-shadow: var(--glow-pink);
+
+    }
+
+ 
+
+    .cta-item strong { color: var(--text); }
+
+ 
+
+    .footer {
+
+      padding: 34px 20px 46px;
 
       border-top: 1px solid var(--line);
 
-      background: rgba(0,0,0,0.26);
+      background: rgba(4, 3, 10, .55);
 
     }
+
+ 
 
     .footer-wrap {
 
@@ -1278,9 +2412,133 @@
 
       justify-content: space-between;
 
+      gap: 18px;
+
       flex-wrap: wrap;
 
-      gap: 14px;
+      color: var(--muted);
+
+    }
+
+ 
+
+    .scan {
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.025) 50%, rgba(255,255,255,0) 100%);
+
+      background-size: 100% 6px;
+
+      mix-blend-mode: soft-light;
+
+      opacity: .22;
+
+      z-index: 1400;
+
+    }
+
+ 
+
+    .float-dot {
+
+      position: fixed;
+
+      right: 18px;
+
+      bottom: 18px;
+
+      width: 46px;
+
+      height: 46px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(255,255,255,.14);
+
+      background: rgba(14,10,24,.68);
+
+      color: var(--cyan);
+
+      box-shadow: var(--glow-cyan), var(--shadow);
+
+      z-index: 1300;
+
+      text-decoration: none;
+
+      transition: transform .22s ease, box-shadow .22s ease;
+
+    }
+
+ 
+
+    .float-dot:hover { transform: translateY(-3px) scale(1.04); box-shadow: var(--glow-pink), var(--shadow); }
+
+ 
+
+    @keyframes fadeUp {
+
+      from { opacity: 0; transform: translateY(20px); }
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+ 
+
+    @keyframes riseIn {
+
+      to { opacity: 1; transform: translateY(0); }
+
+    }
+
+ 
+
+    @keyframes floatScene {
+
+      0%, 100% { transform: translateY(0); }
+
+      50% { transform: translateY(-6px); }
+
+    }
+
+ 
+
+    @keyframes driftY {
+
+      0%, 100% { transform: translateY(0px); }
+
+      50% { transform: translateY(-8px); }
+
+    }
+
+ 
+
+    @keyframes twinkle {
+
+      0%, 100% { opacity: .2; transform: scale(.9); }
+
+      50% { opacity: 1; transform: scale(1.6); }
+
+    }
+
+ 
+
+    @keyframes streak {
+
+      0% { transform: translateX(-20vw); opacity: 0; }
+
+      12% { opacity: .5; }
+
+      100% { transform: translateX(140vw); opacity: 0; }
 
     }
 
@@ -1294,89 +2552,119 @@
 
     }
 
+ 
+
     @keyframes lanes {
 
       from { background-position: 0 0; }
 
-      to { background-position: -110px 0; }
-
-    }
-
-    @keyframes streak {
-
-      0% { transform: translateX(-25vw); opacity: 0; }
-
-      15% { opacity: .42; }
-
-      100% { transform: translateX(130vw); opacity: 0; }
-
-    }
-
-    @keyframes carAcross {
-
-      0% { transform: translateX(0) translateY(0); }
-
-      6% { transform: translateX(8vw) translateY(-2px); }
-
-      50% { transform: translateX(60vw) translateY(1px); }
-
-      100% { transform: translateX(125vw) translateY(0); }
-
-    }
-
-    @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-
-    @keyframes fadeUp {
-
-      from { opacity: 0; transform: translateY(20px); }
-
-      to { opacity: 1; transform: translateY(0); }
-
-    }
-
-    @keyframes riseIn {
-
-      to { opacity: 1; transform: translateY(0); }
+      to { background-position: -112px 0; }
 
     }
 
  
 
-    @media (max-width: 1100px) {
+    @keyframes carPath {
+
+      0% { transform: translateX(0) translateY(0); }
+
+      10% { transform: translateX(13vw) translateY(-2px); }
+
+      50% { transform: translateX(67vw) translateY(2px); }
+
+      96% { transform: translateX(124vw) translateY(0); }
+
+      100% { transform: translateX(124vw) translateY(0); }
+
+    }
+
+ 
+
+    @keyframes spin {
+
+      from { transform: rotate(0); }
+
+      to { transform: rotate(360deg); }
+
+    }
+
+ 
+
+    @keyframes flicker {
+
+      0%, 18%, 22%, 60%, 64%, 100% { opacity: 1; }
+
+      20%, 62% { opacity: .78; }
+
+      21%, 63% { opacity: .92; }
+
+    }
+
+ 
+
+    @media (max-width: 1180px) {
+
+      .hero-wrap,
+
+      .cta-grid,
+
+      .summary-grid { grid-template-columns: 1fr; }
 
       .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
       .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
-      .intro-grid, .cta-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+
+      .scene-card { min-height: 480px; }
 
     }
 
-    @media (max-width: 760px) {
+ 
 
-      .nav { padding: 12px 16px; }
+    @media (max-width: 840px) {
+
+      .nav { padding: 0 16px; }
 
       .nav-links { display: none; }
 
-      .section { padding: 64px 16px; }
+      .section { padding: 68px 16px; }
 
-      .hero-wrap { width: calc(100% - 32px); padding: 64px 0 180px; }
+      .route-grid,
 
-      .hero::before { height: 180px; transform: perspective(500px) rotateX(72deg) translateY(110px) scale(1.65); }
+      .stop-grid,
 
-      .lane { bottom: 98px; }
+      .hero-stats,
 
-      .car-wrap { bottom: 152px; transform: scale(.88); }
+      .compare-grid,
 
-      .route-grid, .stops-grid, .hero-stats { grid-template-columns: 1fr; }
+      .route-meta,
 
-      .meta { grid-template-columns: 1fr; }
+      .mini-grid { grid-template-columns: 1fr; }
 
-      .detail-card { padding: 22px; }
+      .hero-wrap { width: calc(100% - 32px); padding: 32px 0 180px; }
 
-      .hero h1 { max-width: 100%; }
+      .scene-card { min-height: 420px; }
+
+      .city { height: 220px; }
+
+      .road-perspective { height: 160px; transform: perspective(500px) rotateX(74deg) translateY(72px) scale(1.72); }
+
+      .lane-lines { bottom: 62px; }
+
+      .neon-car-wrap { bottom: 92px; transform: scale(.9); }
+
+      .panel-floater { position: relative; right: auto; bottom: auto; width: 100%; margin-top: 18px; }
+
+      .route-card .content,
+
+      .detail-card .inner { padding: 20px; }
+
+      .title-jp { letter-spacing: .22em; }
 
     }
+
+ 
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -1392,89 +2680,193 @@
 
 <body>
 
-  <div class="topbar">
+  <div class="scan" aria-hidden="true"></div>
 
-    <div class="nav">
+  <header class="topbar">
 
-      <a class="brand" href="#top">
+    <nav class="nav">
 
-        <span class="brand-badge">🏎️</span>
+      <a class="brand" href="#top" aria-label="Tokyo Neon Sydney Drives home">
 
-        <span>Sydney Scenic Drives</span>
+        <span class="brand-icon">🏎️</span>
+
+        <span class="brand-text">
+
+          <strong>Tokyo Neon Drives</strong>
+
+          <span>Sydney route arcade</span>
+
+        </span>
 
       </a>
 
-      <div class="nav-links" aria-label="Site sections">
+      <div class="nav-links" aria-label="Primary">
 
         <a href="#routes">Routes</a>
 
-        <a href="#details">Guides</a>
+        <a href="#deep-guide">Guides</a>
 
-        <a href="#tips">Tips</a>
+        <a href="#compare">Compare</a>
 
         <a href="#final-verdict">Verdict</a>
 
       </div>
 
-    </div>
+    </nav>
 
-  </div>
+  </header>
 
  
 
   <main id="top">
 
-    <section class="hero" aria-label="Hero section">
+    <section class="hero" aria-label="Hero">
 
-      <div class="speed-lines" aria-hidden="true">
+      <div class="particles" aria-hidden="true">
+
+        <span></span><span></span><span></span><span></span><span></span>
 
         <span></span><span></span><span></span><span></span><span></span>
 
       </div>
 
-      <div class="car-wrap" aria-hidden="true">
+ 
 
-        <div class="car">
+      <div class="speed-lights" aria-hidden="true">
 
-          <span class="front-light"></span>
-
-          <span class="wheel left"></span>
-
-          <span class="wheel right"></span>
-
-        </div>
+        <span></span><span></span><span></span><span></span><span></span>
 
       </div>
 
-      <div class="lane" aria-hidden="true"></div>
+ 
 
       <div class="hero-wrap">
 
-        <div class="eyebrow">⚡ Full-day icons • low-stress sunsets • mountain curves • quiet ferry roads</div>
+        <section class="hero-copy">
 
-        <h1>Animated guide to the <span class="accent">best scenic drives from Sydney</span></h1>
+          <div class="eyebrow">Neo-noir roads • arcade motion • anime-inspired neon energy</div>
 
-        <p>Coastal cliffs, quieter river bends, beach-and-bush escapes and lush inland roads — structured into a modern, racing-inspired website that feels fast, playful and easy to browse.</p>
+          <h1>
 
-        <div class="hero-actions">
+            <span class="title-neon">Sydney scenic drives</span>
 
-          <a class="btn btn-primary" href="#routes">Explore all 6 routes →</a>
+            <span class="title-jp">東京ネオンロードモード</span>
 
-          <a class="btn btn-secondary" href="#details">Jump to detailed guides</a>
+          </h1>
 
-        </div>
+          <p>
 
-        <div class="hero-stats" aria-label="Quick metrics">
+            A more animated, more interactive driving guide with neon city lights, drifting motion, glowing route cards and an energetic anime-inspired vibe — while still keeping the route planning practical, readable and easy to use.
 
-          <div class="stat"><strong>6</strong><span>Scenic routes with different moods</span></div>
+          </p>
 
-          <div class="stat"><strong>18+</strong><span>Featured stops and anchors</span></div>
+          <div class="hero-actions">
 
-          <div class="stat"><strong>4 styles</strong><span>Coast, mountains, river and inland</span></div>
+            <a class="btn btn-primary" href="#routes">Launch the route grid →</a>
 
-          <div class="stat"><strong>1 goal</strong><span>Easy planning without a messy itinerary</span></div>
+            <a class="btn btn-secondary" href="#deep-guide">Open detailed guides</a>
 
-        </div>
+          </div>
+
+          <div class="hero-stats" aria-label="Stats">
+
+            <article class="stat"><strong>6</strong><span>Drive styles with different moods</span></article>
+
+            <article class="stat"><strong>18+</strong><span>Stops and scenic anchors inside the routes</span></article>
+
+            <article class="stat"><strong>Neon UI</strong><span>Animated cards, glow effects and speed-line motion</span></article>
+
+            <article class="stat"><strong>Interactive</strong><span>Route filter chips and active navigation highlights</span></article>
+
+          </div>
+
+        </section>
+
+ 
+
+        <aside class="scene-card" aria-label="Animated neon street scene">
+
+          <div class="sky-signs" aria-hidden="true">
+
+            <div class="sign jp1">ネオン drive</div>
+
+            <div class="sign jp2">midnight route</div>
+
+            <div class="sign jp3">東京 mood</div>
+
+            <div class="sign jp4">cyan rush</div>
+
+          </div>
+
+ 
+
+          <div class="city" aria-hidden="true">
+
+            <div class="building b1"></div>
+
+            <div class="building b2"></div>
+
+            <div class="building b3"></div>
+
+            <div class="building b4"></div>
+
+            <div class="tower"></div>
+
+            <div class="building b5"></div>
+
+            <div class="building b6"></div>
+
+            <div class="building b7"></div>
+
+          </div>
+
+ 
+
+          <div class="street" aria-hidden="true">
+
+            <div class="road-perspective"></div>
+
+            <div class="lane-lines"></div>
+
+            <div class="neon-car-wrap">
+
+              <div class="car-trail"></div>
+
+              <div class="car-body">
+
+                <span class="tail-light"></span>
+
+                <span class="wheel back"></span>
+
+                <span class="wheel front"></span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+ 
+
+          <div class="panel-floater">
+
+            <h3>Night route feed</h3>
+
+            <ul class="route-ticker">
+
+              <li><span>South Coast Coastal Icons</span><span>Full-day icon</span></li>
+
+              <li><span>Northern Beaches + Pittwater</span><span>Sunset easy</span></li>
+
+              <li><span>Blue Mountains + Bilpin</span><span>Balanced mountain</span></li>
+
+              <li><span>Hawkesbury River + Ferry</span><span>Quiet river route</span></li>
+
+            </ul>
+
+          </div>
+
+        </aside>
 
       </div>
 
@@ -1488,838 +2880,22 @@
 
         <div>
 
-          <span class="pill">Quick route lineup</span>
+          <div class="kicker">Route selector</div>
 
-          <h2>Pick your driving mood</h2>
+          <h2>Choose your route mode</h2>
 
-          <p>Each route keeps the planning practical: clear start point, obvious finish, realistic stops and a distinct feel so the day actually feels structured rather than stitched together.</p>
+          <p>Use the neon filter chips to switch between route moods. The cards glow, lift and respond so the page feels more alive while staying practical.</p>
 
         </div>
 
-      </div>
+        <div class="section-tools" aria-label="Route filters">
 
- 
+          <button class="chip active" type="button" data-filter="all">All routes</button>
 
-      <div class="route-grid">
+          <button class="chip" type="button" data-filter="coastal">Coastal</button>
 
-        <article class="route-card">
+          <button class="chip" type="button" data-filter="mountain">Mountain</button>
 
-          <div class="route-top">
+          <button class="chip" type="button" data-filter="river">River</button>
 
-            <span class="route-kicker">🌊 Coastal Icons</span>
-
-            <span class="pill">Full day</span>
-
-          </div>
-
-          <h3>South Coast Coastal Icons</h3>
-
-          <p class="summary">Bush road, clifftop payoff, Sea Cliff Bridge and a proper Kiama finish. The safest all-round recommendation when you want a classic scenic day trip.</p>
-
-          <div class="meta">
-
-            <div><span>Start</span><strong>Royal National Park Loop</strong></div>
-
-            <div><span>End</span><strong>Kiama Blowhole</strong></div>
-
-            <div><span>Best time</span><strong>Morning start</strong></div>
-
-            <div><span>Effort</span><strong>Medium</strong></div>
-
-          </div>
-
-          <div class="tags">
-
-            <span class="tag">Sea Cliff Bridge</span>
-
-            <span class="tag">Bald Hill</span>
-
-            <span class="tag">Kiama</span>
-
-          </div>
-
-          <a class="jump" href="#south-coast">View detailed guide →</a>
-
-        </article>
-
- 
-
-        <article class="route-card">
-
-          <div class="route-top">
-
-            <span class="route-kicker">🌅 Sunset Drive</span>
-
-            <span class="pill">Easy</span>
-
-          </div>
-
-          <h3>Northern Beaches + Pittwater</h3>
-
-          <p class="summary">A relaxed run with West Head water views and Palm Beach as the familiar, easy finish. Excellent when you want scenic payoff without committing to a massive day.</p>
-
-          <div class="meta">
-
-            <div><span>Start</span><strong>West Head Lookout</strong></div>
-
-            <div><span>End</span><strong>Palm Beach</strong></div>
-
-            <div><span>Best time</span><strong>Late afternoon</strong></div>
-
-            <div><span>Effort</span><strong>Low to medium</strong></div>
-
-          </div>
-
-          <div class="tags">
-
-            <span class="tag">West Head</span>
-
-            <span class="tag">Palm Beach</span>
-
-            <span class="tag">Barrenjoey</span>
-
-          </div>
-
-          <a class="jump" href="#northern-beaches">View detailed guide →</a>
-
-        </article>
-
- 
-
-        <article class="route-card">
-
-          <div class="route-top">
-
-            <span class="route-kicker">⛰️ Mountains + Countryside</span>
-
-            <span class="pill">Balanced</span>
-
-          </div>
-
-          <h3>Blue Mountains Classic + Bells Line Variant</h3>
-
-          <p class="summary">Do the obvious landmark first, then let Leura and Bilpin soften the second half. Great if you want classic mountains without spending all day in busy lookout mode.</p>
-
-          <div class="meta">
-
-            <div><span>Start</span><strong>Echo Point</strong></div>
-
-            <div><span>End</span><strong>Bilpin via Bells Line</strong></div>
-
-            <div><span>Best time</span><strong>Morning start</strong></div>
-
-            <div><span>Effort</span><strong>Medium</strong></div>
-
-          </div>
-
-          <div class="tags">
-
-            <span class="tag">Three Sisters</span>
-
-            <span class="tag">Leura</span>
-
-            <span class="tag">Bilpin</span>
-
-          </div>
-
-          <a class="jump" href="#blue-mountains">View detailed guide →</a>
-
-        </article>
-
- 
-
-        <article class="route-card">
-
-          <div class="route-top">
-
-            <span class="route-kicker">🚢 Ferry Character</span>
-
-            <span class="pill">Quiet day</span>
-
-          </div>
-
-          <h3>Hawkesbury River + Ferry Drive</h3>
-
-          <p class="summary">A calmer alternative to the usual coast and mountain runs. Built around river atmosphere, slower roads and ferry crossings rather than obvious tourist-heavy highlights.</p>
-
-          <div class="meta">
-
-            <div><span>Start</span><strong>Berowra Waters</strong></div>
-
-            <div><span>End</span><strong>Wiseman’s Ferry</strong></div>
-
-            <div><span>Best time</span><strong>Late morning</strong></div>
-
-            <div><span>Effort</span><strong>Medium</strong></div>
-
-          </div>
-
-          <div class="tags">
-
-            <span class="tag">River roads</span>
-
-            <span class="tag">Ferry crossings</span>
-
-            <span class="tag">Sunday drive</span>
-
-          </div>
-
-          <a class="jump" href="#hawkesbury">View detailed guide →</a>
-
-        </article>
-
- 
-
-        <article class="route-card">
-
-          <div class="route-top">
-
-            <span class="route-kicker">🌿 Beach + Bush</span>
-
-            <span class="pill">Relaxed</span>
-
-          </div>
-
-          <h3>Central Coast Nature Escape</h3>
-
-          <p class="summary">Avoca gives you the easy coastal base, while Bouddi adds the bushland contrast that makes the day feel scenic without forcing a giant landmark checklist.</p>
-
-          <div class="meta">
-
-            <div><span>Start</span><strong>Avoca Beach</strong></div>
-
-            <div><span>End</span><strong>Bouddi National Park</strong></div>
-
-            <div><span>Best time</span><strong>Morning</strong></div>
-
-            <div><span>Effort</span><strong>Low to medium</strong></div>
-
-          </div>
-
-          <div class="tags">
-
-            <span class="tag">Avoca</span>
-
-            <span class="tag">Bouddi</span>
-
-            <span class="tag">Weekend reset</span>
-
-          </div>
-
-          <a class="jump" href="#central-coast">View detailed guide →</a>
-
-        </article>
-
- 
-
-        <article class="route-card">
-
-          <div class="route-top">
-
-            <span class="route-kicker">🌲 Inland Valley Run</span>
-
-            <span class="pill">Driver-focused</span>
-
-          </div>
-
-          <h3>Southern Highlands / Inland South Coast</h3>
-
-          <p class="summary">Macquarie Pass provides the stronger road feel, and Kangaroo Valley gives you the quieter inland payoff. Best when you want greenery over ocean icons.</p>
-
-          <div class="meta">
-
-            <div><span>Start</span><strong>Macquarie Pass Drive</strong></div>
-
-            <div><span>End</span><strong>Kangaroo Valley Lookout</strong></div>
-
-            <div><span>Best time</span><strong>Morning start</strong></div>
-
-            <div><span>Effort</span><strong>Medium to high</strong></div>
-
-          </div>
-
-          <div class="tags">
-
-            <span class="tag">Macquarie Pass</span>
-
-            <span class="tag">Kangaroo Valley</span>
-
-            <span class="tag">Berry add-on</span>
-
-          </div>
-
-          <a class="jump" href="#southern-highlands">View detailed guide →</a>
-
-        </article>
-
-      </div>
-
-    </section>
-
- 
-
-    <section class="section" id="details">
-
-      <div class="section-head">
-
-        <div>
-
-          <span class="pill">Route-by-route guide</span>
-
-          <h2>Detailed planning without the clutter</h2>
-
-          <p>Every guide below turns the content into a cleaner web layout: intros, summary, stop cards, timing cues, practical notes and an honest verdict so you can decide fast.</p>
-
-        </div>
-
-      </div>
-
- 
-
-      <div class="details">
-
-        <article class="detail-card" id="south-coast">
-
-          <div class="detail-head">
-
-            <div>
-
-              <span class="route-kicker">🏁 South Coast Coastal Icons</span>
-
-              <h3>Sydney to Kiama via Royal National Park</h3>
-
-            </div>
-
-            <span class="pill">Best for full-day coastal drives</span>
-
-          </div>
-
-          <p class="lede">If you want one of those classic Sydney drives that gives you a bit of everything without feeling stitched together, this is the one. You get bush road, ocean lookouts, a proper scenic bridge section and a solid South Coast finish. The flow is what makes it work: Royal National Park sets a calm start, Bald Hill and Sea Cliff Bridge bring the big visual payoff, and Kiama gives you a definite endpoint so the day feels complete rather than vague.</p>
-
-          <div class="intro-grid">
-
-            <div class="panel">
-
-              <h4>Quick summary</h4>
-
-              <div class="meta">
-
-                <div><span>Start</span><strong>Royal National Park Loop</strong></div>
-
-                <div><span>End</span><strong>Kiama Blowhole</strong></div>
-
-                <div><span>Drive style</span><strong>Coastal landmarks with bush, cliffs and ocean road</strong></div>
-
-                <div><span>Best time</span><strong>Morning start for unrushed stops</strong></div>
-
-              </div>
-
-              <div class="tags">
-
-                <span class="tag">Photography stops</span>
-
-                <span class="tag">Sunday drive</span>
-
-                <span class="tag">Low planning stress</span>
-
-              </div>
-
-            </div>
-
-            <div class="panel">
-
-              <h4>Main highlights</h4>
-
-              <ul class="list">
-
-                <li>Royal National Park Loop</li>
-
-                <li>Wattamolla Beach &amp; Lagoon</li>
-
-                <li>Audley Weir</li>
-
-                <li>Bald Hill Lookout</li>
-
-                <li>Sea Cliff Bridge</li>
-
-                <li>Kiama Blowhole</li>
-
-              </ul>
-
-            </div>
-
-          </div>
-
-          <div class="panel">
-
-            <h4>Suggested route overview</h4>
-
-            <p>Start with the Royal National Park Loop while the day is still fresh, using Audley Weir or Wattamolla as your early reset stops. Continue south to Bald Hill Lookout for the clifftop view, then roll across Sea Cliff Bridge. If you want a proper finish rather than just turning around, keep going to Kiama Blowhole. Berry works as an optional food stop if you want to stretch the day a little further.</p>
-
-          </div>
-
-          <div class="stops-grid">
-
-            <div class="stop">
-
-              <h5>Royal National Park Loop</h5>
-
-              <p><strong>Why stop:</strong> The backbone of the route, giving the drive a greener and quieter opener before the coastal landmarks kick in.</p>
-
-              <p><strong>Do:</strong> Drive the loop and pull over at picnic or beach stops that suit your pace.</p>
-
-              <p><strong>Time:</strong> 1–2 hours.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Audley Weir</h5>
-
-              <p><strong>Why stop:</strong> A simple low-effort breather that breaks up the park section without demanding a big commitment.</p>
-
-              <p><strong>Do:</strong> Stretch your legs and reset before continuing south.</p>
-
-              <p><strong>Time:</strong> 15–30 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Wattamolla Beach &amp; Lagoon</h5>
-
-              <p><strong>Why stop:</strong> The nicest slower stop in the park if you want the drive to feel more like a day out than a straight run.</p>
-
-              <p><strong>Do:</strong> Walk down, sit by the water or do a quick picnic-style pause.</p>
-
-              <p><strong>Time:</strong> 30–60 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Bald Hill Lookout</h5>
-
-              <p><strong>Why stop:</strong> One of the strongest visual stops on the route with the real clifftop payoff.</p>
-
-              <p><strong>Do:</strong> Pull over and slow the day down before the bridge section.</p>
-
-              <p><strong>Time:</strong> 20–40 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Sea Cliff Bridge</h5>
-
-              <p><strong>Why stop:</strong> The iconic driving section that makes the route feel instantly worthwhile.</p>
-
-              <p><strong>Do:</strong> Drive it slowly and stop nearby for a proper look.</p>
-
-              <p><strong>Time:</strong> 15–30 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Kiama Blowhole</h5>
-
-              <p><strong>Why stop:</strong> Gives the route a definite finish instead of just “heading south for a while.”</p>
-
-              <p><strong>Do:</strong> Walk around the blowhole area and use the town as your lunch or turnaround point.</p>
-
-              <p><strong>Time:</strong> 30–60 minutes.</p>
-
-            </div>
-
-          </div>
-
-          <div class="tips-box">
-
-            <strong>Good to know:</strong> Best on a clear day, strongest as a full outing, and Kiama is likely to be the busiest stop. Wattamolla and Audley improve the day if you want breaks, but you do not need both if your priority is momentum.
-
-          </div>
-
-          <div class="verdict">Honest verdict: The easiest Sydney scenic drive to recommend when someone says, “I want a proper coastal day trip.” Structured, photogenic and hard to mess up.</div>
-
-        </article>
-
- 
-
-        <article class="detail-card" id="northern-beaches">
-
-          <div class="detail-head">
-
-            <div>
-
-              <span class="route-kicker">🌅 Northern Beaches + Pittwater</span>
-
-              <h3>West Head to Palm Beach</h3>
-
-            </div>
-
-            <span class="pill">Best for sunset and low-effort outings</span>
-
-          </div>
-
-          <p class="lede">This one is more about mood than trying to tick off a huge list of stops. West Head gives you the quiet bush-and-water moment, and Palm Beach gives the route a recognisable beach finish that still feels like a proper outing. It is a simple yes for a date drive, nice afternoon plan or easy scenic run.</p>
-
-          <div class="intro-grid">
-
-            <div class="panel">
-
-              <h4>Quick summary</h4>
-
-              <div class="meta">
-
-                <div><span>Start</span><strong>West Head Lookout</strong></div>
-
-                <div><span>End</span><strong>Palm Beach &amp; Barrenjoey Lighthouse</strong></div>
-
-                <div><span>Drive style</span><strong>Relaxed coastal and bush drive with water views</strong></div>
-
-                <div><span>Best time</span><strong>Late afternoon into sunset</strong></div>
-
-              </div>
-
-              <div class="tags">
-
-                <span class="tag">Date drive</span>
-
-                <span class="tag">Weekend easy option</span>
-
-                <span class="tag">No huge day-trip effort</span>
-
-              </div>
-
-            </div>
-
-            <div class="panel">
-
-              <h4>Best for</h4>
-
-              <ul class="list">
-
-                <li>Low-effort scenic drives</li>
-
-                <li>Sunset outings</li>
-
-                <li>Northern Beaches weekends</li>
-
-                <li>Water-view lovers over long-road drivers</li>
-
-              </ul>
-
-            </div>
-
-          </div>
-
-          <div class="panel">
-
-            <h4>Suggested route overview</h4>
-
-            <p>Head out to West Head first while you still want the quieter bush-drive feel, then continue to Palm Beach for the slower finish. The Barrenjoey Lighthouse walk is the extra piece that turns it from a simple drive into a proper outing, but Palm Beach on its own still works if you are keeping things easy.</p>
-
-          </div>
-
-          <div class="stops-grid">
-
-            <div class="stop">
-
-              <h5>West Head Lookout</h5>
-
-              <p><strong>Why stop:</strong> The calm, peaceful part of the route with water, inlets and open sky rather than crowds.</p>
-
-              <p><strong>Do:</strong> Take your time with the view and let this be the slower first half of the trip.</p>
-
-              <p><strong>Time:</strong> 20–40 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Palm Beach &amp; Barrenjoey Lighthouse</h5>
-
-              <p><strong>Why stop:</strong> The obvious endpoint, but one that earns it with a beach finish and optional lighthouse climb.</p>
-
-              <p><strong>Do:</strong> Walk the sand for the easy version, or add the lighthouse walk for the stronger payoff.</p>
-
-              <p><strong>Time:</strong> 45 minutes–2 hours.</p>
-
-            </div>
-
-          </div>
-
-          <div class="tips-box">
-
-            <strong>Good to know:</strong> This route is about quality rather than quantity. Fewer stops, cleaner mood. Decide early whether you want a pure drive or a drive-plus-walk day.
-
-          </div>
-
-          <div class="verdict">Honest verdict: One of the easiest scenic drives near Sydney to actually enjoy in real life — no overbuilt itinerary, just a clean, attractive route that feels good without much fuss.</div>
-
-        </article>
-
- 
-
-        <article class="detail-card" id="blue-mountains">
-
-          <div class="detail-head">
-
-            <div>
-
-              <span class="route-kicker">⛰️ Blue Mountains Classic + Bells Line Variant</span>
-
-              <h3>Echo Point, Leura and Bilpin</h3>
-
-            </div>
-
-            <span class="pill">Best balanced mountain day</span>
-
-          </div>
-
-          <p class="lede">This route works because it gives you both versions of the Blue Mountains in one day. You get the classic first-time stop at Echo Point, then a softer second half through Leura and Bilpin that feels less like box-ticking. Do the bigger lookout first, then let the countryside section handle the relaxed return mood.</p>
-
-          <div class="intro-grid">
-
-            <div class="panel">
-
-              <h4>Quick summary</h4>
-
-              <div class="meta">
-
-                <div><span>Start</span><strong>Echo Point (Three Sisters)</strong></div>
-
-                <div><span>End</span><strong>Bilpin via Bells Line of Road</strong></div>
-
-                <div><span>Drive style</span><strong>Mountain lookout first, countryside later</strong></div>
-
-                <div><span>Best time</span><strong>Morning start</strong></div>
-
-              </div>
-
-              <div class="tags">
-
-                <span class="tag">First-timers</span>
-
-                <span class="tag">Café stop friendly</span>
-
-                <span class="tag">Quieter return leg</span>
-
-              </div>
-
-            </div>
-
-            <div class="panel">
-
-              <h4>Main highlights</h4>
-
-              <ul class="list">
-
-                <li>Echo Point (Three Sisters)</li>
-
-                <li>Leura Village</li>
-
-                <li>Bilpin</li>
-
-                <li>Bells Line countryside feel</li>
-
-              </ul>
-
-            </div>
-
-          </div>
-
-          <div class="panel">
-
-            <h4>Suggested route overview</h4>
-
-            <p>Start with Echo Point while you are fresh and more tolerant of the classic stop. Then break the day with Leura Village before heading into Bilpin and the quieter Bells Line mood. That split keeps the route from feeling too lookout-heavy or too town-heavy.</p>
-
-          </div>
-
-          <div class="stops-grid">
-
-            <div class="stop">
-
-              <h5>Echo Point (Three Sisters)</h5>
-
-              <p><strong>Why stop:</strong> The anchor stop for the proper Blue Mountains moment.</p>
-
-              <p><strong>Do:</strong> Take in the main lookout early and treat it as the launch point, not the whole day.</p>
-
-              <p><strong>Time:</strong> 30–60 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Leura Village</h5>
-
-              <p><strong>Why stop:</strong> Adds breathing space and a café-town reset between scenic sections.</p>
-
-              <p><strong>Do:</strong> Coffee, lunch or a casual walk before the quieter return road.</p>
-
-              <p><strong>Time:</strong> 30–90 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Bilpin</h5>
-
-              <p><strong>Why stop:</strong> Changes the mood from classic lookout day into something slower and more rural.</p>
-
-              <p><strong>Do:</strong> Use it as the countryside stop for food, a stretch and a softer finish.</p>
-
-              <p><strong>Time:</strong> 30–90 minutes.</p>
-
-            </div>
-
-          </div>
-
-          <div class="tips-box">
-
-            <strong>Good to know:</strong> Best on a clear day. Echo Point does the heavy lifting for classic scenery, while Bilpin becomes the star if your priority is a more relaxed mountain mood.
-
-          </div>
-
-          <div class="verdict">Honest verdict: Probably the most balanced Blue Mountains day drive in the set — obvious landmark, then a less hectic second half that feels better in practice than piling on too many major lookouts.</div>
-
-        </article>
-
- 
-
-        <article class="detail-card" id="hawkesbury">
-
-          <div class="detail-head">
-
-            <div>
-
-              <span class="route-kicker">🚢 Hawkesbury River + Ferry Drive</span>
-
-              <h3>Berowra Waters to Wiseman’s Ferry</h3>
-
-            </div>
-
-            <span class="pill">Best for quiet Sunday energy</span>
-
-          </div>
-
-          <p class="lede">This route has a very different feel from the usual coast-or-mountains options. It is slower, more tucked in, and built around river scenery and ferry crossings rather than big landmark lookouts. That quieter identity is exactly why it works.</p>
-
-          <div class="intro-grid">
-
-            <div class="panel">
-
-              <h4>Quick summary</h4>
-
-              <div class="meta">
-
-                <div><span>Start</span><strong>Berowra Waters &amp; Ferry Crossing</strong></div>
-
-                <div><span>End</span><strong>Wiseman’s Ferry</strong></div>
-
-                <div><span>Drive style</span><strong>Slow scenic river drive with ferry character</strong></div>
-
-                <div><span>Best time</span><strong>Late morning to afternoon</strong></div>
-
-              </div>
-
-              <div class="tags">
-
-                <span class="tag">River scenery</span>
-
-                <span class="tag">Different from beaches</span>
-
-                <span class="tag">Atmosphere-led</span>
-
-              </div>
-
-            </div>
-
-            <div class="panel">
-
-              <h4>Best for</h4>
-
-              <ul class="list">
-
-                <li>Quiet Sunday drives</li>
-
-                <li>Drivers who like the road itself</li>
-
-                <li>People tired of crowded beach spots</li>
-
-                <li>Couples or solo outings</li>
-
-              </ul>
-
-            </div>
-
-          </div>
-
-          <div class="panel">
-
-            <h4>Suggested route overview</h4>
-
-            <p>Start at Berowra Waters for the tucked-away river mood, then work toward Wiseman’s Ferry for the stronger ferry-and-riverside identity. The route is less about stacking major attractions and more about enjoying the shape of the drive and the slower pace.</p>
-
-          </div>
-
-          <div class="stops-grid">
-
-            <div class="stop">
-
-              <h5>Berowra Waters &amp; Ferry Crossing</h5>
-
-              <p><strong>Why stop:</strong> The stop that gives the entire route its character.</p>
-
-              <p><strong>Do:</strong> Take in the river atmosphere and treat the ferry as part of the experience.</p>
-
-              <p><strong>Time:</strong> 30–60 minutes.</p>
-
-            </div>
-
-            <div class="stop">
-
-              <h5>Wiseman’s Ferry</h5>
-
-              <p><strong>Why stop:</strong> Gives the drive a proper destination and reinforces the river theme.</p>
-
-              <p><strong>Do:</strong> Pause by the river and let this be the main finishing point before heading back.</p>
-
-              <p><strong>Time:</strong> 30–90 minutes.</p>
-
-            </div>
-
-          </div>
-
-          <div class="tips-box">
-
-            <strong>Good to know:</strong> Allow flexibility for ferry timing and do not expect big landmark moments. This one is about feel, not spectacle, and that is the reason to choose it.
-
-          </div>
-
-          <div class="verdict">Honest verdict: The best pick if you want a Sydney scenic drive that does not feel touristy in tone. More subtle than Sea Cliff Bridge, but full of personality for the right driver.</div>
-
-        </article>
-
- 
-
-        <article class="detail-card" id="central-coast">
-
-          <div class="detail-head">
-
-            <div>
-
-              <span class="route-kicker">🌿 Central Coast Nature Escape</span>
-
-              <h3>Avoca Beach and Bouddi National Park</h3>
-
-            </div>
-
-            <span class="pill">Best for quieter coastal resets</span>
-
-          </div>
-
-          <p class="lede">If the bigger Sydney coastal routes sound good in theory but a bit too obvious in practice, this Central Coast option is a nice reset. Avoca gives the relaxed coastal base, while Bouddi National Park adds the bushland side that stops the day from feeling
+          <button class="chip" type="button
